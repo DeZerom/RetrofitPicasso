@@ -12,7 +12,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.RetrofitPicasso">
         <activity
-            android:name=".composeActivity.ComposeActivity"
+            android:name=".ComposeActivity"
             android:exported="true"
             android:label="@string/title_activity_compose"
             android:theme="@style/Theme.RetrofitPicasso">
@@ -22,11 +22,6 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
-
-        <activity
-            android:name=".MainActivity"
-            android:exported="false">
         </activity>
     </application>
 
