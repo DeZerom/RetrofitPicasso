@@ -1,17 +1,22 @@
 package com.example.retrofitpicasso.repository
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.retrofitpicasso.database.JokeDatabase
 import com.example.retrofitpicasso.domain_joke.Joke
+import com.example.retrofitpicasso.retrofit.ErrorJoke
+import com.example.retrofitpicasso.retrofit.NetJoke
 import com.example.retrofitpicasso.retrofit.Network
+import com.example.retrofitpicasso.retrofit.SourceType
+import com.example.retrofitpicasso.retrofit.dads.DadJokeService
+import com.example.retrofitpicasso.retrofit.dads.DadNetJoke
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import retrofit2.await
+import java.lang.Exception
 
-class JokesRepository(database: JokeDatabase) {
-
-    private var jokeService = Network.getJokeService()
+class JokesRepository(database: JokeDatabase, private val network: Network) {
 
     private val jokeDao = database.jokeDao
 
@@ -24,9 +29,18 @@ class JokesRepository(database: JokeDatabase) {
      */
     suspend fun getAJokeAndCashIt() {
         withContext(Dispatchers.IO) {
-            val joke = jokeService.getRandomJoke().await()
+            val result = network.getJokeFrom(SourceType.GEEK).runCatching {
+                await()
+            }
+
+            val joke = result.getOrElse {
+                Log.e("JokesRepository", it?.message ?: "")
+                ErrorJoke(it.toString())
+            }
             _activeJoke.postValue(joke.toDomainJoke())
-            jokeDao.insertJoke(joke.toDatabaseJoke())
+
+            val dbJoke = joke.toDatabaseJoke()
+            if (dbJoke.source != SourceType.ERROR) jokeDao.insertJoke(dbJoke)
         }
     }
 

@@ -4,11 +4,13 @@ import android.app.Application
 import androidx.lifecycle.*
 import com.example.retrofitpicasso.database.JokeDatabase
 import com.example.retrofitpicasso.repository.JokesRepository
+import com.example.retrofitpicasso.retrofit.Network
 import kotlinx.coroutines.launch
 
 class ComposeActivityViewModel(application: Application): AndroidViewModel(application) {
 
-    private val jokesRepository = JokesRepository(JokeDatabase.getInstance(application))
+    private val jokesRepository = JokesRepository(JokeDatabase.getInstance(application),
+        Network(application))
 
     val activeJoke = jokesRepository.activeJoke
 
@@ -23,5 +25,8 @@ class ComposeActivityViewModel(application: Application): AndroidViewModel(appli
     }
 
     val onNextJokeBtnClick: () -> Unit = {
+        viewModelScope.launch {
+            jokesRepository.getAJokeAndCashIt()
+        }
     }
 }
