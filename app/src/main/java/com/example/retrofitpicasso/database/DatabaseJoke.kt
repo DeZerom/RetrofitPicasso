@@ -6,7 +6,7 @@ import com.example.retrofitpicasso.retrofit.SourceType
 
 @Entity
 data class DatabaseJoke(
-    @PrimaryKey val id: Int,
+    @PrimaryKey val id: Long,
     val joke: String,
     val source: SourceType
 ) {}

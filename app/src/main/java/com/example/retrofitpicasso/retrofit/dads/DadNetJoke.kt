@@ -5,6 +5,7 @@ import com.example.retrofitpicasso.database.DatabaseJoke
 import com.example.retrofitpicasso.domain_joke.Joke
 import com.example.retrofitpicasso.retrofit.NetJoke
 import com.example.retrofitpicasso.retrofit.SourceType
+import kotlin.math.absoluteValue
 
 data class DadNetJoke(
     val id: String,
@@ -17,6 +18,6 @@ data class DadNetJoke(
     }
 
     override fun toDatabaseJoke(): DatabaseJoke {
-        return DatabaseJoke(id.hashCode() * 10, joke, SourceType.DAD)
+        return DatabaseJoke((id.hashCode().toLong().absoluteValue * 10), joke, SourceType.DAD)
     }
 }

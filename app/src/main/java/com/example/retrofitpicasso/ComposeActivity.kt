@@ -46,7 +46,7 @@ class ComposeActivity : ComponentActivity() {
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Text(text = joke?.joke ?: "Null joke",
+            Text(text = joke?.joke ?: "Your joke is loading. Wait for a minute",
                 color = Color.Black,
                 fontSize = 24.sp
             )

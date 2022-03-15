@@ -50,15 +50,18 @@ class Network(application: Application) {
         }
     }
 
+    @Suppress("UNCHECKED_CAST")
     private fun getDadJokeCall(): Call<NetJoke> {
         return dadJokeService
             .getRandomJoke(DadJokeService.ResponseTypes.JSON.toString()) as Call<NetJoke>
     }
 
+    @Suppress("UNCHECKED_CAST")
     private fun getGeekJokeCall(): Call<NetJoke> {
         return geekJokeService.getRandomJoke() as Call<NetJoke>
     }
 
+    @Suppress("UNCHECKED_CAST")
     private fun getSetupJokeCall(): Call<NetJoke> {
         return setupJokeService.getRandomJoke() as Call<NetJoke>
     }

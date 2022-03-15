@@ -18,6 +18,8 @@ class JokesRepository(database: JokeDatabase, private val network: Network) {
     val activeJoke: LiveData<Joke>
         get() = _activeJoke
 
+    private var activeJokeSource = SourceType.GEEK
+
     /**
      * Gets joke and cashes it. A new one joke will be written in [activeJoke]
      */
@@ -30,13 +32,15 @@ class JokesRepository(database: JokeDatabase, private val network: Network) {
 
     private suspend fun getAJokeFromNet(): Joke {
         return try {
-            val joke = network.getJokeFrom(SourceType.GEEK).await()
+            val joke = network.getJokeFrom(activeJokeSource).await()
             cashAJoke(joke.toDatabaseJoke())
             joke.toDomainJoke()
         } catch(e: NoConnectionException) {
             getAJokeFromDatabase()
         } catch(e: Exception) {
             ErrorJoke(e.toString()).toDomainJoke()
+        } finally {
+            activeJokeSource = activeJokeSource.next()
         }
     }
 

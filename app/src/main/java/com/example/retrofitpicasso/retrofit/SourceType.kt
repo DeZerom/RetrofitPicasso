@@ -11,4 +11,13 @@ enum class SourceType {
             ERROR -> "ERROR_JOKE"
         }
     }
+
+    fun next(): SourceType {
+        return when (this) {
+            GEEK -> DAD
+            DAD -> SETUP
+            SETUP -> GEEK
+            ERROR -> this
+        }
+    }
 }
