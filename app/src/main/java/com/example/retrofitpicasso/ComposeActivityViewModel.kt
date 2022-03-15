@@ -20,13 +20,13 @@ class ComposeActivityViewModel(application: Application): AndroidViewModel(appli
 
     init {
         viewModelScope.launch {
-            jokesRepository.getAJokeAndCashIt()
+            jokesRepository.getAJokeAndCahIt()
         }
     }
 
     val onNextJokeBtnClick: () -> Unit = {
         viewModelScope.launch {
-            jokesRepository.getAJokeAndCashIt()
+            jokesRepository.getAJokeAndCahIt()
         }
     }
 }

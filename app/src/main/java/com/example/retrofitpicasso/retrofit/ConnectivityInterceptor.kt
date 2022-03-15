@@ -17,7 +17,9 @@ class ConnectivityInterceptor(application: Application): Interceptor {
         if (netInfo != null && netInfo.isConnected) {
             return chain.proceed(chain.request())
         } else {
-            throw IOException("No connection")
+            throw NoConnectionException("No internet connection")
         }
     }
 }
+
+class NoConnectionException(message: String): IOException(message) {}
