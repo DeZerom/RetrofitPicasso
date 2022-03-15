@@ -1,4 +1,25 @@
 package com.example.retrofitpicasso.retrofit.setup
 
-class SetupNetJoke {
+import com.example.retrofitpicasso.database.DatabaseJoke
+import com.example.retrofitpicasso.domain_joke.Joke
+import com.example.retrofitpicasso.retrofit.NetJoke
+import com.example.retrofitpicasso.retrofit.SourceType
+
+data class SetupNetJoke(
+    val setup: String,
+    val punchline: String
+): NetJoke {
+
+    private fun convertSetupPunchlineToSingleJoke(): String {
+        return "$setup $punchline"
+    }
+
+    override fun toDomainJoke(): Joke {
+        return Joke(convertSetupPunchlineToSingleJoke())
+    }
+
+    override fun toDatabaseJoke(): DatabaseJoke {
+        val joke = convertSetupPunchlineToSingleJoke()
+        return DatabaseJoke(joke.hashCode() * 10 + 2, joke, SourceType.SETUP)
+    }
 }
