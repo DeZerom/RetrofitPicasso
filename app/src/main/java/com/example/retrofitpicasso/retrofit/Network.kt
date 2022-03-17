@@ -41,6 +41,7 @@ class Network(application: Application) {
             .build()
 
         blagueRetrofit = Retrofit.Builder()
+            .baseUrl("https://blague.xyz/api/joke/")
             .addConverterFactory(GsonConverterFactory.create())
             .client(OkHttpClient.Builder().addInterceptor(interceptor).build())
             .build()

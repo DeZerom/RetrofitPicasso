@@ -2,6 +2,7 @@ package com.example.retrofitpicasso.database
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import androidx.room.TypeConverters
 import com.example.retrofitpicasso.retrofit.SourceType
 
 @Entity
