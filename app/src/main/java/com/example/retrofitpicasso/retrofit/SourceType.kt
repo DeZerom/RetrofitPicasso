@@ -1,13 +1,14 @@
 package com.example.retrofitpicasso.retrofit
 
 enum class SourceType {
-    GEEK, DAD, SETUP, ERROR;
+    GEEK, DAD, SETUP, ERROR, BLAGUE;
 
     override fun toString(): String {
         return when (this) {
             GEEK -> "GEEK"
             DAD -> "DAD"
             SETUP -> "SETUP"
+            BLAGUE -> "BLAGUE"
             ERROR -> "ERROR_JOKE"
         }
     }
@@ -16,7 +17,8 @@ enum class SourceType {
         return when (this) {
             GEEK -> DAD
             DAD -> SETUP
-            SETUP -> GEEK
+            SETUP -> BLAGUE
+            BLAGUE -> DAD
             ERROR -> this
         }
     }
