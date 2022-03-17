@@ -22,4 +22,17 @@ enum class SourceType {
             ERROR -> this
         }
     }
+
+    companion object {
+        fun fromString(string: String): SourceType {
+            return when (string) {
+                "GEEK" -> GEEK
+                "DAD" -> DAD
+                "SETUP" -> SETUP
+                "BLAGUE" -> BLAGUE
+                "ERROR_JOKE" -> ERROR
+                else -> throw IllegalArgumentException("Unknown source type")
+            }
+        }
+    }
 }

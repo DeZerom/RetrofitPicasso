@@ -9,6 +9,7 @@ import com.example.retrofitpicasso.retrofit.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import retrofit2.await
+import java.util.*
 
 class JokesRepository(database: JokeDatabase, private val network: Network) {
 
@@ -45,8 +46,10 @@ class JokesRepository(database: JokeDatabase, private val network: Network) {
     }
 
     private suspend fun getAJokeFromDatabase(): Joke {
+        val random = Random()
         return withContext(Dispatchers.IO) {
-            Joke("Cash loading is not implemented yet")
+            val listOfJokes = jokeDao.selectBySourceType(activeJokeSource)
+            Joke(listOfJokes[random.nextInt(listOfJokes.size)].joke)
         }
     }
 
