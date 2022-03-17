@@ -1,17 +1,21 @@
 package com.example.retrofitpicasso.database
 
 import android.content.Context
-import androidx.room.AutoMigration
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
+import com.example.retrofitpicasso.database.counter.HowManyJokesAsked
+import com.example.retrofitpicasso.database.counter.HowManyJokesAskedDAO
+import com.example.retrofitpicasso.database.jokes.DatabaseJoke
+import com.example.retrofitpicasso.database.jokes.JokeDAO
 
 @Database(entities = [DatabaseJoke::class, HowManyJokesAsked::class],
     version = 2, exportSchema = false)
 abstract class JokeDatabase: RoomDatabase() {
     abstract val jokeDao: JokeDAO
+    abstract val howManyJokesAskedDao: HowManyJokesAskedDAO
 
     companion object {
         @Volatile private lateinit var instance: JokeDatabase

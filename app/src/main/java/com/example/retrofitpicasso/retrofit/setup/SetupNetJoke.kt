@@ -1,6 +1,6 @@
 package com.example.retrofitpicasso.retrofit.setup
 
-import com.example.retrofitpicasso.database.DatabaseJoke
+import com.example.retrofitpicasso.database.jokes.DatabaseJoke
 import com.example.retrofitpicasso.domain_joke.Joke
 import com.example.retrofitpicasso.retrofit.NetJoke
 import com.example.retrofitpicasso.retrofit.SourceType

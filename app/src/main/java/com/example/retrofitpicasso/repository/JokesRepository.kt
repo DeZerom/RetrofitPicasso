@@ -2,7 +2,7 @@ package com.example.retrofitpicasso.repository
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.example.retrofitpicasso.database.DatabaseJoke
+import com.example.retrofitpicasso.database.jokes.DatabaseJoke
 import com.example.retrofitpicasso.database.JokeDatabase
 import com.example.retrofitpicasso.domain_joke.Joke
 import com.example.retrofitpicasso.retrofit.*

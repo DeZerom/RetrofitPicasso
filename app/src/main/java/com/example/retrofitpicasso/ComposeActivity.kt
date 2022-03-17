@@ -39,7 +39,7 @@ class ComposeActivity : ComponentActivity() {
     @Composable
     fun ActivityUi(viewModel: ComposeActivityViewModel = ComposeActivityViewModel(application)) {
         val joke by viewModel.activeJoke.observeAsState()
-        val countOfJokes by viewModel.countOfJokes.observeAsState()
+        val countOfJokes by viewModel.count.observeAsState()
 
         Log.i("ComposeActivityUI", joke?.joke ?: "")
 

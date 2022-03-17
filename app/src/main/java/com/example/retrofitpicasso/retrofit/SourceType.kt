@@ -18,7 +18,7 @@ enum class SourceType {
             GEEK -> DAD
             DAD -> SETUP
             SETUP -> BLAGUE
-            BLAGUE -> DAD
+            BLAGUE -> GEEK
             ERROR -> this
         }
     }

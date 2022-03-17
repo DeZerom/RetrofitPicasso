@@ -1,4 +1,4 @@
-package com.example.retrofitpicasso.database
+package com.example.retrofitpicasso.database.jokes
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
