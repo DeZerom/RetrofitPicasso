@@ -1,6 +1,7 @@
 package com.example.retrofitpicasso
 
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.*
@@ -39,6 +40,8 @@ class ComposeActivity : ComponentActivity() {
     fun ActivityUi(viewModel: ComposeActivityViewModel = ComposeActivityViewModel(application)) {
         val joke by viewModel.activeJoke.observeAsState()
         val countOfJokes by viewModel.countOfJokes.observeAsState()
+
+        Log.i("ComposeActivityUI", joke?.joke ?: "")
 
         Column(modifier = Modifier
             .fillMaxWidth()
