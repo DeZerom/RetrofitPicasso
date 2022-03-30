@@ -2,13 +2,11 @@ package com.example.retrofitpicasso
 
 import android.os.Bundle
 import android.util.Log
+import android.widget.RadioGroup
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.Button
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Surface
-import androidx.compose.material.Text
+import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
@@ -40,12 +38,12 @@ class ComposeActivity : ComponentActivity() {
     fun ActivityUi(viewModel: ComposeActivityViewModel = ComposeActivityViewModel(application)) {
         val joke by viewModel.activeJoke.observeAsState()
         val countOfJokes by viewModel.count.observeAsState()
-
-        Log.i("ComposeActivityUI", joke?.joke ?: "")
+        val activeSources by viewModel.activeSources.observeAsState()
 
         Column(modifier = Modifier
-            .fillMaxWidth()
-            .wrapContentHeight(),
+            .wrapContentWidth()
+            .wrapContentHeight()
+            .padding(8.dp),
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
@@ -61,6 +59,38 @@ class ComposeActivity : ComponentActivity() {
             }
 
             Text("You've asked for ${countOfJokes ?: -666} jokes")
+
+            Spacer(modifier = Modifier.height(16.dp))
+
+            //check boxes for different sources
+            Text("Joke types")
+            Spacer(Modifier.height(16.dp))
+            Column(Modifier.wrapContentWidth(Alignment.Start)) {
+                //geek
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    Checkbox(checked = activeSources?.geek ?: false,
+                        onCheckedChange = viewModel.onGeekSourceChkBoxClicked)
+                    Text("Geek jokes", color = Color.Black, fontSize = 20.sp)
+                }
+                //dad
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    Checkbox(checked = activeSources?.dad ?: false,
+                        onCheckedChange = viewModel.onDadSourceChkBoxClicked)
+                    Text("Dad jokes", color = Color.Black, fontSize = 20.sp)
+                }
+                //setup
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    Checkbox(checked = activeSources?.setup ?: false,
+                        onCheckedChange = viewModel.onSetupSourceChkBoxClicked)
+                    Text("Setup jokes", color = Color.Black, fontSize = 20.sp)
+                }
+                //blague
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    Checkbox(checked = activeSources?.blague ?: false,
+                        onCheckedChange = viewModel.onBlagueSourceChkBoxClicked)
+                    Text("Blague jokes", color = Color.Black, fontSize = 20.sp)
+                }
+            }
         }
     }
 

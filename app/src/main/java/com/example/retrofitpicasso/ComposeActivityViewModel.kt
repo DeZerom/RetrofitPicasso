@@ -14,6 +14,10 @@ class ComposeActivityViewModel(application: Application): AndroidViewModel(appli
         Network(application))
     private val countRepository = HowManyJokesAskedRepository(JokeDatabase.getInstance(application))
 
+    private val _activeSources = MutableLiveData<ActiveSources>(ActiveSources())
+    val activeSources: LiveData<ActiveSources>
+        get() = _activeSources
+
     val activeJoke = jokesRepository.activeJoke
     val count = countRepository.count
 
@@ -29,4 +33,27 @@ class ComposeActivityViewModel(application: Application): AndroidViewModel(appli
             countRepository.increaseCount()
         }
     }
+
+    val onGeekSourceChkBoxClicked: (Boolean) -> Unit = {
+        _activeSources.value = _activeSources.value?.copy(geek = it)
+    }
+
+    val onDadSourceChkBoxClicked: (Boolean) -> Unit = {
+        _activeSources.value = _activeSources.value?.copy(dad = it)
+    }
+
+    val onSetupSourceChkBoxClicked: (Boolean) -> Unit = {
+        _activeSources.value = _activeSources.value?.copy(setup = it)
+    }
+
+    val onBlagueSourceChkBoxClicked: (Boolean) -> Unit = {
+        _activeSources.value = _activeSources.value?.copy(blague = it)
+    }
+
+    data class ActiveSources(
+        val geek: Boolean = true,
+        val dad: Boolean = true,
+        val blague: Boolean = true,
+        val setup: Boolean = true
+    )
 }
