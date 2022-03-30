@@ -6,6 +6,7 @@ import com.example.retrofitpicasso.database.JokeDatabase
 import com.example.retrofitpicasso.repository.HowManyJokesAskedRepository
 import com.example.retrofitpicasso.repository.JokesRepository
 import com.example.retrofitpicasso.retrofit.Network
+import com.example.retrofitpicasso.retrofit.SourceType
 import kotlinx.coroutines.launch
 
 class ComposeActivityViewModel(application: Application): AndroidViewModel(application) {
@@ -14,9 +15,7 @@ class ComposeActivityViewModel(application: Application): AndroidViewModel(appli
         Network(application))
     private val countRepository = HowManyJokesAskedRepository(JokeDatabase.getInstance(application))
 
-    private val _activeSources = MutableLiveData<ActiveSources>(ActiveSources())
-    val activeSources: LiveData<ActiveSources>
-        get() = _activeSources
+    val activeSources = jokesRepository.affirmedSources
 
     val activeJoke = jokesRepository.activeJoke
     val count = countRepository.count
@@ -35,22 +34,22 @@ class ComposeActivityViewModel(application: Application): AndroidViewModel(appli
     }
 
     val onGeekSourceChkBoxClicked: (Boolean) -> Unit = {
-        _activeSources.value = _activeSources.value?.copy(geek = it)
+        jokesRepository.onAffirmedSourceTypesChanged(SourceType.GEEK, it)
     }
 
     val onDadSourceChkBoxClicked: (Boolean) -> Unit = {
-        _activeSources.value = _activeSources.value?.copy(dad = it)
+        jokesRepository.onAffirmedSourceTypesChanged(SourceType.DAD, it)
     }
 
     val onSetupSourceChkBoxClicked: (Boolean) -> Unit = {
-        _activeSources.value = _activeSources.value?.copy(setup = it)
+        jokesRepository.onAffirmedSourceTypesChanged(SourceType.SETUP, it)
     }
 
     val onBlagueSourceChkBoxClicked: (Boolean) -> Unit = {
-        _activeSources.value = _activeSources.value?.copy(blague = it)
+        jokesRepository.onAffirmedSourceTypesChanged(SourceType.BLAGUE, it)
     }
 
-    data class ActiveSources(
+    data class AffirmedSources(
         val geek: Boolean = true,
         val dad: Boolean = true,
         val blague: Boolean = true,
