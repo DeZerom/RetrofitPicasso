@@ -18,6 +18,10 @@ class JokesRepository(database: JokeDatabase, private val network: Network) {
     private val jokeDao = database.jokeDao
 
     private val _activeJoke = MutableLiveData<Joke>()
+
+    /**
+     * Contains actual [Joke]
+     */
     val activeJoke: LiveData<Joke>
         get() = _activeJoke
 
@@ -26,6 +30,10 @@ class JokesRepository(database: JokeDatabase, private val network: Network) {
     private val _affirmedSources = MutableLiveData(
         ComposeActivityViewModel.AffirmedSources()
     )
+
+    /**
+     * Contains affirmed joke sources
+     */
     val affirmedSources: LiveData<ComposeActivityViewModel.AffirmedSources>
         get() = _affirmedSources
 
@@ -89,6 +97,24 @@ class JokesRepository(database: JokeDatabase, private val network: Network) {
         return source
     }
 
+    private fun checkActiveSourceAndChangeIfNeeded() {
+        val affirmed = _affirmedSources.value ?: ComposeActivityViewModel.AffirmedSources()
+        var changeNeeded = false
+        when(activeJokeSource) {
+            GEEK -> if (!affirmed.geek) changeNeeded = true
+            DAD -> if (!affirmed.dad) changeNeeded = true
+            SETUP -> if (!affirmed.setup) changeNeeded = true
+            ERROR -> changeNeeded = true
+            BLAGUE -> if (!affirmed.blague) changeNeeded = true
+        }
+
+        if (changeNeeded) activeJokeSource = nextJokeType()
+    }
+
+
+    /**
+     * Changes [affirmedSources] according to the parameters.
+     */
     fun onAffirmedSourceTypesChanged(sourceType: SourceType, isAffirmed: Boolean) {
         val currentSources = _affirmedSources.value ?: ComposeActivityViewModel.AffirmedSources()
         _affirmedSources.value = when(sourceType) {
@@ -98,6 +124,7 @@ class JokesRepository(database: JokeDatabase, private val network: Network) {
             ERROR -> currentSources
             BLAGUE -> currentSources.copy(blague = isAffirmed)
         }
+        checkActiveSourceAndChangeIfNeeded()
     }
 
 }
